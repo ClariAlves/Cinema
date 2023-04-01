@@ -2,54 +2,50 @@ package cinema;
 
 public class Sessoes {
 	
-	private int assentos[] = new int[50], numMaxAss = 25;
-	private String horarios[] = {"14:30", "18:00", "21:30"};
-	private String tipo[] = {"Dublado", "Legendado"};
+	private int assentos, numMaxAss = assentos/2; //assentos com o numMax sendo metade dos assentos
+	private String horarios[] = {"14:30", "18:00", "21:30"}, horarioEsc; //horários e a var horario escolhido
+	private String tipo[] = {"Dublado", "Legendado"}, tipoEsc; //tipo dublado ou legendado e a vr de tipo escolhido
 	
-	public Sessoes(int assentos, String horarios, String tipo) {
+	public Sessoes(int assentos, String horarioEsc, String tipoEsc) { //construtor
 		super();
-		this.setAssentos(escAssento());
-		this.setHorarios(escHorario());
-		this.setTipo(escTipo());	
+		this.assentos = (escAssento(assentos));
+		this.horarioEsc = (escHorario(horarioEsc));
+		this.tipoEsc = (escTipo(tipoEsc));	
+		//as variáveis recebem os métodos de escolha
 	}
 	
-	public void status() {
-		System.out.println("Assentos: " + this.getAssentos() + "\nHorário: " + this.getHorarios() +
-				"\nTipo: " + this.getTipo());
-		System.out.println("--------------------------------------------------------------");
-	}
-	
-	public int escAssento() {
-		if(this.getAssentos() <= numMaxAss) {
+	public int escAssento(int assentos) {  //método de escolher o assento
+		if(this.getAssentos() <= this.getNumMaxAss()) { //se o número de assentos for menor ou igual ao número máximo
 			this.setAssentos(this.getAssentos());
+			System.out.println("--------------------------------------------------------------");
+			System.out.println("Assentos: " + this.getAssentos());  //ele atribui, se não, ele printa que atingiu o número máximo
 		}else{
 			System.out.println("Número máximo de assentos atingido!"); }
 		return this.getAssentos();
 	}
 
 	
-	public String[] escHorario() {
-		if(horarios[0] == "14:30" || horarios[0] == "18:00" || horarios[0] == "21:30") {
-			this.setHorarios(this.getHorarios());
-		}else {
-			System.out.println("Horário indisponível!"); }
-		
-		return this.getHorarios();
+	public String escHorario(String horarioEsc) { //método de escolher o horário
+		for(int i = 0; i < horarios.length; i++) {
+		if(horarios[i].equals(horarioEsc)) {
+			System.out.println("Horário: " + horarios[i]); }
+		}
+		return this.getHorarioEsc();
 	}
 	
-	public String[] escTipo() {
-		if(tipo[0] == "Dublado"){ this.setTipo(this.getTipo());
-		}else if(tipo[0] == "Legendado"){ this.setTipo(this.getTipo());
-		}else{ System.out.println("Tipo inválido"); }
-		
-		return this.getTipo();
-	}
+	public String escTipo(String tipoEsc) { //método de escolher o tipo
+		for(int i = 0; i < tipo.length; i++) {
+		if(tipo[i].equals(tipoEsc)) {
+			System.out.println("Tipo: " + tipo[i]); }
+		}
+		return this.getTipoEsc();
+	}	
 
 	public int getAssentos() {
-		return assentos[0];
+		return assentos;
 	}
 	public void setAssentos(int assentos) {
-		this.assentos[0] = this.getAssentos();
+		this.assentos = this.getAssentos();
 	}
 
 
@@ -76,4 +72,17 @@ public class Sessoes {
 		this.tipo = tipo;
 	}
 
+	public String getHorarioEsc() {
+		return horarioEsc;
+	}
+	public void setHorarioEsc(String horarioEsc) {
+		this.horarioEsc = horarioEsc;
+	}
+
+	public String getTipoEsc() {
+		return tipoEsc;
+	}
+	public void setTipoEsc(String tipoEsc) {
+		this.tipoEsc = tipoEsc;
+	}
 }
