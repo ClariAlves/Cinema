@@ -1,0 +1,21 @@
+private void botaoAssentosActionPerformed(java.awt.event.ActionEvent evt) {                                              
+            Sessao s = new Sessao();
+            if(botao14h.isSelected()){
+                s.setHorario("14:30"); }
+            else if(botao18h.isSelected()){
+                s.setHorario("18:00"); }
+            else if(botao21h.isSelected()){
+                s.setHorario("21:30"); }
+            if(botaoDublado.isSelected()){
+                s.setTipo("Dublado"); }     
+            else if(botaoLegendado.isSelected()){
+                s.setTipo("Legendado"); }  
+            controler.cadastrar(s);
+            this.dispose();
+           // new Assentos().setVisible(true);
+    }                                             
+
+    private void botaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        new TelaMostraSessoes().setVisible(true);
+        this.dispose();
+    }   
