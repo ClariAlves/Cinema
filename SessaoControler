@@ -1,0 +1,27 @@
+import DAO.SessaoDAO;
+import model.Sessao;
+
+
+/**
+ *
+ * @author Clarice
+ */
+public class SessaoControler {
+    
+    public void cadastrar(Sessao s){
+        
+        SessaoDAO sDAO = new SessaoDAO();
+        s.setId(s.getId());
+        s.setHorario(s.getHorario());
+        s.setTipo(s.getTipo());
+        s.setIdFilme(s.getIdFilme());
+        sDAO.cadastrar(s);     
+    }  
+    
+    public Sessao buscar(int i){
+    int id = i;
+    Sessao r = new Sessao();
+    SessaoDAO reservaDao = new SessaoDAO();
+    r = reservaDao.buscar(id);
+    return r;
+    }
