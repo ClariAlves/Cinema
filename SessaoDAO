@@ -1,0 +1,93 @@
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import jdbc.ConnectBD;
+import model.Sessao;
+
+/**
+ *
+ * @author Clarice
+ */
+public class SessaoDAO {
+    
+    private Connection conn;
+    
+    public SessaoDAO() {
+        this.conn = new ConnectBD().getConnection(); 
+    }
+    
+    public void cadastrar(Sessao sessao) {
+      
+        try {
+             String sql = "insert into sessao (id, horario, tipo, idFilme) values (?,?,?,?)";
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, sessao.getId());
+            pstm.setString(2, sessao.getHorario());
+            pstm.setString(3, sessao.getTipo());
+            pstm.setInt(4, sessao.getIdFilme());
+
+            pstm.execute();
+            pstm.close();
+
+            System.out.println("Cadastrado! ");
+        } catch (SQLException e) {
+            System.out.println("Erro ao realizar cadastro. " + e);
+        }
+    }
+    
+    public Sessao buscar(int i) {
+        try {
+            int id = i;
+            String sql = "SELECT * FROM `sessao` WHERE id = " + id;
+            PreparedStatement psm = conn.prepareStatement(sql);
+            
+            ResultSet result = psm.executeQuery();
+            Sessao s = new Sessao();
+            if (result.next()) {
+                s.setIdFilme(result.getInt("id"));
+                s.setTitulo(result.getString("horario"));
+                s.setSinopse(result.getString("tipo"));
+                s.setClasseIdade(result.getInt("idFilme"));
+            }
+            return s;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
+    public List<Sessao> listarSessao(int i){
+        try {
+            int id = i;
+            List<Sessao> lista = new ArrayList<>();
+            
+            String sql = "select * from sessao where sessao_id = " + id;
+            PreparedStatement psm = conn.prepareStatement(sql);
+            
+            ResultSet result = psm.executeQuery();
+            
+            while(result.next()){
+            
+                String sql2 = "select * from sessao here id =" + result.getInt("sessao_id");
+                PreparedStatement psm2 = conn.prepareStatement(sql);
+            
+                ResultSet result2 = psm2.executeQuery();
+                
+                while(result.next()){
+                Sessao s = new Sessao();
+                
+                s.setIdFilme(result2.getInt("id"));
+                s.setTitulo(result2.getString("horario"));
+                s.setSinopse(result2.getString("tipo"));
+                s.setClasseIdade(result2.getInt("idFilme"));
+                lista.add(s);
+                }
+            }
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Erro: " +  e);
+             return null;
+        }
+    }
